@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:mad2_db_dataobjects/API.dart';
 import 'package:mad2_db_dataobjects/user_data.dart';
 import 'package:mad2_browsepage/browse_page.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class LeaderboardPage extends StatefulWidget {
   @override
@@ -27,9 +28,52 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
     Widget header = Container(
       height: 200,
       color: Colors.purple,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          // Add the "Leaderboard" title and trophy icon
+          Container(
+            margin: EdgeInsets.only(top: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Leaderboard",
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: Colors.white,
+                  ),
+                ),
+                Icon(
+                  MdiIcons.crownCircle,
+                  color: Colors.white,
+                  size: 30,
+                ),
+              ],
+            ),
+          ),
+          Container(
+            height: 80,
+            width: MediaQuery.of(context).size.width * 0.85,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(
+                Radius.circular(10),
+              ),
+            ),
+            margin: EdgeInsets.only(bottom: 15),
+          ),
+        ],
+      ),
     );
     Widget userListContainer = Container(
-      color: Colors.white,
+      padding: EdgeInsets.only(top: 190),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
     );
 
     return Scaffold(
@@ -39,8 +83,8 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return content;
               } else {
-                List<UserData> userList = snapshot.data![0] as List<UserData>;
-                UserData currentUserData = snapshot.data![1] as UserData;
+                List<UserData> userList = snapshot.data?[0] as List<UserData>;
+                UserData currentUserData = snapshot.data?[1] as UserData;
                 userList.sort((a, b) => b.points.compareTo(a.points));
 
                 // Create a list of the top 10 users from the userList
@@ -52,6 +96,23 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            "Leaderboard",
+                            style: TextStyle(
+                              fontSize: 24,
+                              color: Colors.white,
+                            ),
+                          ),
+                          Icon(
+                            MdiIcons.crownCircle,
+                            color: Colors.white,
+                            size: 30,
+                          ),
+                        ],
+                      ),
                       // Add the current user's ranking to the white box
                       Container(
                         height: 80,
@@ -86,7 +147,12 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                 );
 
                 userListContainer = Container(
-                  color: Colors.white,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(10),
+                    ),
+                  ),
                   padding: EdgeInsets.only(top: 190),
                   child: ListView.builder(
                     itemCount: topUsers.length,
@@ -117,8 +183,8 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
 
                 return Stack(
                   children: [
-                    userListContainer,
                     header,
+                    userListContainer,
                   ],
                 );
               }
