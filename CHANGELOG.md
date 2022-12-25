@@ -1,2 +1,2 @@
-Leaderboard for MAD2
+Leaderboard for JagHub
 1.0.1
