@@ -39,7 +39,7 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
         print(currentUserPlace);
         header = Container(
           width: MediaQuery.of(context).size.width,
-          height: 250,
+          height: 280,
           decoration: BoxDecoration(
             color: Color(0xFF4B39EF),
           ),
@@ -51,6 +51,17 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                 Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(0, 0, 3, 0),
+                        child: Icon(Icons.arrow_back_rounded,
+                            size: 30,
+                            color: Color.fromARGB(255, 255, 255, 255)),
+                      ),
+                    ),
                     Text(
                       'Leaderboard',
                       style: TextStyle(
@@ -513,9 +524,11 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
         }
 
         userListContainer = Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 220, 0, 0),
+            padding: EdgeInsetsDirectional.fromSTEB(0, 235, 0, 0),
             child: Container(
                 width: MediaQuery.of(context).size.width,
+                constraints: BoxConstraints(
+                    minHeight: MediaQuery.of(context).size.height * .66),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   boxShadow: [
@@ -547,7 +560,7 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
     if (!dataLoaded) {
       header = Container(
           width: MediaQuery.of(context).size.width,
-          height: 250,
+          height: 280,
           decoration: BoxDecoration(
             color: Color(0xFF4B39EF),
           ),
@@ -557,6 +570,17 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                 Row(
                   mainAxisSize: MainAxisSize.max,
                   children: [
+                    InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(7, 0, 0, 0),
+                        child: Icon(Icons.arrow_back_rounded,
+                            size: 30,
+                            color: Color.fromARGB(255, 255, 255, 255)),
+                      ),
+                    ),
                     Text(
                       'Leaderboard',
                       style: TextStyle(
@@ -588,9 +612,10 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                     ))
               ])));
       userListContainer = Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0, 220, 0, 0),
+          padding: EdgeInsetsDirectional.fromSTEB(0, 235, 0, 0),
           child: Container(
               width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height * .8,
               decoration: BoxDecoration(
                 color: Colors.white,
                 boxShadow: [
@@ -612,8 +637,10 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                 CircularProgressIndicator(color: Colors.black),
               ])));
     }
-    body = Stack(
-      children: [header, userListContainer],
+    body = SingleChildScrollView(
+      child: Stack(
+        children: [header, userListContainer],
+      ),
     );
 
     return Scaffold(body: body);
