@@ -16,6 +16,7 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
   late List<Widget> userLeaderboardList = [];
   late Widget userListContainer;
   late Widget body;
+  late int currentUserPlace;
   bool dataLoaded = false;
 
   @override
@@ -23,16 +24,27 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
     super.initState();
     API().getUserList().then((value) {
       users = value;
+
       API().getCurrentUserData().then((value) {
         currentUser = value;
+        users.sort((a, b) => b.points.compareTo(a.points));
+        for (int i = 0; i < users.length; i++) {
+          UserData user = users[i];
+          if (user.userId == currentUser.userId) {
+            currentUserPlace = i + 1;
+            break;
+          }
+        }
+
+        print(currentUserPlace);
         header = Container(
           width: MediaQuery.of(context).size.width,
-          height: 240,
+          height: 250,
           decoration: BoxDecoration(
             color: Color(0xFF4B39EF),
           ),
           child: Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(25, 25, 25, 0),
+            padding: EdgeInsetsDirectional.fromSTEB(25, 35, 25, 0),
             child: Column(
               mainAxisSize: MainAxisSize.max,
               children: [
@@ -99,11 +111,20 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                                               height: 60,
                                               clipBehavior: Clip.antiAlias,
                                               decoration: BoxDecoration(
+                                                color: Colors.black,
                                                 shape: BoxShape.circle,
                                               ),
-                                              child: Image.network(
-                                                currentUser.profilePic,
-                                                fit: BoxFit.cover,
+                                              child: Container(
+                                                width: 56,
+                                                height: 56,
+                                                clipBehavior: Clip.antiAlias,
+                                                decoration: BoxDecoration(
+                                                  shape: BoxShape.circle,
+                                                ),
+                                                child: Image.network(
+                                                  currentUser.profilePic,
+                                                  fit: BoxFit.cover,
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -205,7 +226,7 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                                                     padding:
                                                         EdgeInsetsDirectional
                                                             .fromSTEB(
-                                                                0, 2, 0, 0),
+                                                                0, 0, 0, 0),
                                                     child: Text(
                                                       currentUser.points
                                                           .toString(),
@@ -238,7 +259,11 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                               FittedBox(
                                 fit: BoxFit.scaleDown,
                                 child: Text(
-                                  'You are rank #${(users.indexOf(currentUser) + 1)} out of ${users.length} users!',
+                                  'You are rank #' +
+                                      currentUserPlace.toString() +
+                                      ' out of ' +
+                                      users.length.toString() +
+                                      ' users!',
                                   maxLines: 1,
                                   style: TextStyle(
                                     fontFamily: 'Montserrat',
@@ -259,7 +284,6 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
             ),
           ),
         );
-        users.sort((a, b) => b.points.compareTo(a.points));
 
         // Create a list of the top 10 users from the userList
         List<UserData> topUsers = users.take(10).toList();
@@ -330,11 +354,20 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                                             height: 40,
                                             clipBehavior: Clip.antiAlias,
                                             decoration: BoxDecoration(
+                                              color: Colors.black,
                                               shape: BoxShape.circle,
                                             ),
-                                            child: Image.network(
-                                              user.profilePic,
-                                              fit: BoxFit.cover,
+                                            child: Container(
+                                              width: 36,
+                                              height: 36,
+                                              clipBehavior: Clip.antiAlias,
+                                              decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                              ),
+                                              child: Image.network(
+                                                user.profilePic,
+                                                fit: BoxFit.cover,
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -428,7 +461,7 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                                               ),
                                               Padding(
                                                 padding: EdgeInsetsDirectional
-                                                    .fromSTEB(0, 2, 0, 0),
+                                                    .fromSTEB(0, 0, 0, 0),
                                                 child: Text(
                                                   user.points.toString(),
                                                   style: TextStyle(
@@ -469,8 +502,8 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                   mainAxisSize: MainAxisSize.max,
                   children: [
                     Divider(
-                      thickness: 2,
-                      color: Color(0xFF444444),
+                      thickness: 1.5,
+                      color: Color.fromARGB(255, 87, 87, 87),
                     ),
                   ],
                 ),
@@ -480,7 +513,7 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
         }
 
         userListContainer = Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(0, 210, 0, 0),
+            padding: EdgeInsetsDirectional.fromSTEB(0, 220, 0, 0),
             child: Container(
                 width: MediaQuery.of(context).size.width,
                 decoration: BoxDecoration(
@@ -514,12 +547,12 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
     if (!dataLoaded) {
       header = Container(
           width: MediaQuery.of(context).size.width,
-          height: 240,
+          height: 250,
           decoration: BoxDecoration(
             color: Color(0xFF4B39EF),
           ),
           child: Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(25, 25, 25, 0),
+              padding: EdgeInsetsDirectional.fromSTEB(25, 35, 25, 0),
               child: Column(mainAxisSize: MainAxisSize.max, children: [
                 Row(
                   mainAxisSize: MainAxisSize.max,
@@ -555,7 +588,7 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                     ))
               ])));
       userListContainer = Padding(
-          padding: EdgeInsetsDirectional.fromSTEB(0, 210, 0, 0),
+          padding: EdgeInsetsDirectional.fromSTEB(0, 220, 0, 0),
           child: Container(
               width: MediaQuery.of(context).size.width,
               decoration: BoxDecoration(
