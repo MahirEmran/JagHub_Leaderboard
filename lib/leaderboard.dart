@@ -329,13 +329,17 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.center,
                                     children: [
-                                      Text(
-                                        (i + 1).toString() + '.',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontFamily: 'Montserrat',
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.bold,
+                                      FittedBox(
+                                        fit: BoxFit.scaleDown,
+                                        child: Text(
+                                          (i + 1).toString() + '.',
+                                          maxLines: 1,
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontFamily: 'Montserrat',
+                                            fontSize: 24,
+                                            fontWeight: FontWeight.bold,
+                                          ),
                                         ),
                                       ),
                                     ],
