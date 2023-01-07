@@ -334,7 +334,7 @@ class _LeaderboardPageState extends State<LeaderboardPage> {
                                         style: TextStyle(
                                           color: Colors.black,
                                           fontFamily: 'Montserrat',
-                                          fontSize: 28,
+                                          fontSize: 24,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
